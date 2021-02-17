@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.example.anonymous_board.R
 import com.example.anonymous_board.datacs.list
@@ -22,7 +23,7 @@ class listAdapter(val context: Context?, val listData:ArrayList<list>): Recycler
                 var data: list =listData.get(curPos)
 
                 //val intent = Intent(view.getContext(), detail_coupon::class.java)
-
+                Toast.makeText(context,"늉",Toast.LENGTH_SHORT).show()
                 val pref=context!!.getSharedPreferences("listData",0)
 
                 val edit=pref.edit()
