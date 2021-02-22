@@ -17,19 +17,26 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.zx9cv.staris.dao.UserVO;
+import com.zx9cv.staris.dao.memoDAO;
+import com.zx9cv.staris.vo.memoVO;
 
 /**
  * Handles requests for the application home page.
  */
+
 @Controller
 public class HomeController {
+	
+	@Autowired
+	memoDAO memodao;
+	
 	
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
@@ -49,7 +56,30 @@ public class HomeController {
 		
 		return "home";
 	}
-	
+	@RequestMapping("/saveContent.do")
+	public @ResponseBody String saveContent(String title,String writer,String content) {
+		
+		System.out.println(title+writer+content);
+		memoVO m = new memoVO();
+		m.setContent(content);
+		m.setTitle(title);
+		m.setWriter(writer);
+		m.toString();
+		
+		memodao.insertMemo(m);
+		
+		
+		return null;
+		
+	}
+	@RequestMapping("/callList.do")
+	public @ResponseBody String callList() {
+		
+		
+		
+		return null;
+		
+	}
 	
 	@RequestMapping("/androidtest.do")// 리스트를 보내기
 	public @ResponseBody String andr(String id,String pw) {
@@ -59,20 +89,20 @@ public class HomeController {
         JSONObject jsonMain = new JSONObject(); // json 객체
         // {변수명:값, 변수명:값}
         // {sendData:[{변수명:값},{변수명:값},...]}
-        List<UserVO> items = new ArrayList<UserVO>();
+        List<memoVO> items = new ArrayList<memoVO>();
         JSONArray jArray = new JSONArray(); // json배열
         	for(int i=0;i<10;i++) {
-    		UserVO vo=new UserVO();
-			vo.setSid(""+i);
-			vo.setSname("sejong");
+    		memoVO vo=new memoVO();
+//			vo.setSid(""+i);
+//			vo.setSname("sejong");
 			items.add(vo);
 		}    	
         for(int i=0; i<items.size(); i++){
-        	UserVO dto = items.get(i);
+        	memoVO dto = items.get(i);
             JSONObject row = new JSONObject();
             // json객체.put("변수명",값)
-            row.put("f", dto.getSid());
-            row.put("l", dto.getSname());
+//            row.put("f", dto.getSid());
+//            row.put("l", dto.getSname());
             // 배열에 추가
             // json배열.add(인덱스,json객체)
             jArray.add(i,row);

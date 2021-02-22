@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC  "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Memo">
+
+
+
+<insert id="insertMemo">
+	insert into memolist(writer,content,title) values(#{writer},#{content},#{title})
+</insert>
+
+<insert id="register">
+	insert into users (Sname,Sid,Spw,Smajor,Sgrade,Snum) values(#{Sname},#{Sid},#{Spw},#{Smajor},#{Sgrade},#{Snum})
+</insert>
+
+
+<update id="chmod">
+	update users set Siscouncil=#{Siscouncil} where Sid=#{Sid}
+</update>
+</mapper>
+<!-- <select id="selall" resultType="users">
+	select * from users where Sid=#{Sid}
+</select>
+<select id="GetallUser" resultType="users">
+	select * from users where Siscouncil &lt; 10 order by Smajor
+</select> -->

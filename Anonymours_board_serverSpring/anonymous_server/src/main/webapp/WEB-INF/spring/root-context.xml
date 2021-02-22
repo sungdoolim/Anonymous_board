@@ -1,8 +1,64 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd">
+		xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:context="http://www.springframework.org/schema/context"
+		xsi:schemaLocation="http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd
+		http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+		http://www.springframework.org/schema/batch http://www.springframework.org/schema/batch/spring-batch.xsd">
 	
 	<!-- Root Context: defines shared resources visible to all other web components -->
 		
+				<context:component-scan 
+		base-package="com.zx9cv.staris.dao"/>
+		
+		<bean id="dataSource"
+	class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName"
+		value="oracle.jdbc.OracleDriver"
+	/>
+	<!--   value="com.mysql.cj.jdbc.Driver"    com.mysql.cj.jdbc.Driver-->
+			<property name="url"
+		value="jdbc:oracle:thin:@127.0.0.1:1521:xe"
+		/><!-- jdbc:oracle:thin:@127.0.0.1:1521:xe
+		홍쓰넷 : jdbc:mysql://localhost:3306/staris?useUnicode=yes&amp;characterEncoding=utf8&amp;useSSL=false&amp;serverTimezone=UTC
+		value="jdbc:mysql://13.125.206.73:3306/db1?useUnicode=yes&amp;characterEncoding=utf8&amp;useSSL=false&amp;serverTimezone=UTC" -->
+<!-- 13.125.206.73:3306/db1? --><!-- odyssey -->
+		<property name="username" value="zx9"/><!--원래 day / 1234 --><!-- 홍 : staris -->
+		<property name="password" value="day"/>	<!--원래 zx9 / day --><!-- 홍 : 6Is4kBL7rF0{ -->
+	</bean>	
+	
+	<bean id="sqlSessionFactory"
+		class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource"/><!-- ref는 얘가 호출되면 이어서 호출하는 것! = 얘호출되면 위에꺼 호출됨  -->
+		<!-- setter()메서드를 통한 의돈성 주입 DI -->
+		<!-- mybatis 환경 설정 태그 경로 설정 -->
+		<property name="configLocation"
+		value="classpath:/mybatis-config.xml"/>
+		<!-- classpath 경로 : src/main/resources
+		mybatis-config.xml은 데이터 저장 빈 클래스 객체명을 별칭으로 관리 : typealias있는 곳 -->
+
+
+	<!-- 쿼리문을 담는 매퍼 xml 태그 위치 경로 설정  . 여기서 classpath:는 src/main/resources까지의 경로-->
+		<property name="mapperLocations" value="classpath:zx9cv/staris/mappers/*/*.xml"/>
+
+	</bean>
+	
+	<!-- mybatis 쿼리문 수행 객체 설정 -->
+	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate"
+		destroy-method="clearCache">
+		<constructor-arg name="sqlSessionFactory"
+		ref="sqlSessionFactory"/>
+	<!-- constructor-arg  : 생성자를 뜻함  -> 생성자를 통한 의존성 주입(DI) -->
+			<!--  aop자동 프록시를 설정하자 -->
+
+</bean>
+
 </beans>
