@@ -8,6 +8,7 @@ import android.util.Log
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import com.example.anonymous_board.datacs.list
+import com.example.anonymous_board.serverData.allList
 import com.example.anonymous_board.serverData.allmemo
 import com.example.anonymous_board.serverData.onememo
 import com.example.anonymous_board.serverData.saveContent
@@ -33,6 +34,7 @@ class writeNew : AppCompatActivity() {
             save_To_Server(Title,conTent)
 
             //f()
+            callAllList()
             Toast.makeText(this,conTent,Toast.LENGTH_SHORT).show()
         }
         cancel.setOnClickListener(){
@@ -42,9 +44,53 @@ class writeNew : AppCompatActivity() {
             startActivity(intent)
         }
     }
+    fun callAllList(){
+        var retrofit = Retrofit.Builder()
+            .baseUrl("http://192.168.22.119:8052")//http://192.168.56.1:8052
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+        val retrofitService = retrofit.create(allList::class.java)
+        retrofitService.requestAllData().enqueue(object : Callback<list> {
+            @RequiresApi(Build.VERSION_CODES.KITKAT)
+            override fun onResponse(call: Call<list>, response: Response<list>) {
+                println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~onresponse this is getallList")
+                if (response.isSuccessful) {
+                    println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~onresponse getallList success")
+                    val body = response.body()
+                    val jsonObj =  JSONObject.wrap(body?.sendData)
+                    println("jsonobj:${jsonObj}")
+                    val jArray = jsonObj as JSONArray
+                    println(jArray.length())
+                    var ptmp :list
+                    var tmpar= arrayListOf<list>()
+                    for(i in 0..jArray.length()-1){
+                        ptmp= list(jArray.getJSONObject(i).getString("title"),jArray.getJSONObject(i).getString("writer"),jArray.getJSONObject(i).getString("content"),null)
+                        tmpar.add(ptmp)
+                    }
+                    for(i in 0..tmpar.size-1){
+                        println(tmpar.get(i).toString())
+                    }
+
+                    body?.let {
+                        //text_text.text = body.toString response 잘 받아왔는지 확인.
+                        println(body.toString())
+                        println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~onresponse    let")
+
+                    }
+                }
+                else {
+                    println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~onresponse   else")
+                }
+            }
+            override fun onFailure(call: Call<list>, t: Throwable) {
+                println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~fail f2")
+                Log.d("this is error",t.message.toString())
+            }
+        })
+    }
     fun save_To_Server(title:String,content:String){
         var retrofit = Retrofit.Builder()
-            .baseUrl("http://172.30.1.8:8052")//http://192.168.56.1:8052
+            .baseUrl("http://192.168.22.119:8052")//http://192.168.56.1:8052
             .addConverterFactory(GsonConverterFactory.create())
             .build()
         val retrofitService = retrofit.create(saveContent::class.java)
@@ -82,7 +128,7 @@ class writeNew : AppCompatActivity() {
                 }
             }
             override fun onFailure(call: Call<list>, t: Throwable) {
-                println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~fail f2")
+                println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~fail save")
                 Log.d("this is error",t.message.toString())
             }
 
@@ -91,7 +137,7 @@ class writeNew : AppCompatActivity() {
     }
     fun f2(){// 리스트를 받음
         var retrofit = Retrofit.Builder()
-            .baseUrl("http://172.30.1.8:8052")//http://192.168.56.1:8052
+            .baseUrl("http://192.168.11.4:8052")//http://192.168.56.1:8052
             .addConverterFactory(GsonConverterFactory.create())
             .build()
         val retrofitService = retrofit.create(allmemo::class.java)//내가만든 inter2 클래스 사용
@@ -141,7 +187,7 @@ class writeNew : AppCompatActivity() {
     fun f(){// 단일 클래스를 받음
 
         var retrofit = Retrofit.Builder()
-            .baseUrl("http://172.30.1.8:8052")//http://192.168.56.1:8052
+            .baseUrl("http://192.168.11.4:8052")//http://192.168.56.1:8052
             .addConverterFactory(GsonConverterFactory.create())
             .build()
         val retrofitService = retrofit.create(onememo::class.java)// 내가만든 inter 클래스 사용

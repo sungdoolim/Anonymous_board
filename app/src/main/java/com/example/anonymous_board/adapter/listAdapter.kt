@@ -23,7 +23,7 @@ class listAdapter(val context: Context?, val listData:ArrayList<list>): Recycler
                 var data: list =listData.get(curPos)
 
                 //val intent = Intent(view.getContext(), detail_coupon::class.java)
-                Toast.makeText(context,"늉",Toast.LENGTH_SHORT).show()
+                Toast.makeText(context,"늉"+curPos.toString(),Toast.LENGTH_SHORT).show()
                 val pref=context!!.getSharedPreferences("listData",0)
 
                 val edit=pref.edit()

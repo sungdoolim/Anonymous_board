@@ -10,9 +10,9 @@ PUBLIC  "-//mybatis.org//DTD Mapper 3.0//EN"
 	insert into memolist(writer,content,title) values(#{writer},#{content},#{title})
 </insert>
 
-<insert id="register">
-	insert into users (Sname,Sid,Spw,Smajor,Sgrade,Snum) values(#{Sname},#{Sid},#{Spw},#{Smajor},#{Sgrade},#{Snum})
-</insert>
+<select id="allmemoList" resultType="memos">
+	select * from memolist
+</select>
 
 
 <update id="chmod">

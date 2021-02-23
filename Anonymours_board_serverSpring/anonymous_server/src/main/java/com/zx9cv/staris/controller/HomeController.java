@@ -72,12 +72,39 @@ public class HomeController {
 		return null;
 		
 	}
-	@RequestMapping("/callList.do")
+	@RequestMapping("/callMemoList.do")
 	public @ResponseBody String callList() {
 		
 		
-		
-		return null;
+		List<memoVO>alist= memodao.allList();
+		int al=alist.size();
+		for(int i=0;i<al;i++) {
+			System.out.println(alist.get(i).getTitle());
+		}
+		JSONObject jsonMain = new JSONObject(); 
+		//List<memoVO> items = new ArrayList<memoVO>();
+		JSONArray jArray = new JSONArray();
+		JSONObject row=null;
+        for(int i=0; i<al; i++){
+        	
+             row= new JSONObject();
+             row.put("title", alist.get(i).getTitle());
+             row.put("content", alist.get(i).getContent());
+             row.put("writer", alist.get(i).getWriter());
+             
+             
+            // json객체.put("변수명",값)
+//            row.put("f", dto.getSid());
+//            row.put("l", dto.getSname());
+            // 배열에 추가
+            // json배열.add(인덱스,json객체)
+            jArray.add(row);
+        }
+        // json객체에 배열을 넣음
+        jsonMain.put("sendData", jArray);
+        return jsonMain.toJSONString();
+    	
+		//return null;
 		
 	}
 	

@@ -1,5 +1,7 @@
 package com.zx9cv.staris.dao;
 
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -13,5 +15,10 @@ public class memodaoImpl implements memoDAO{
 	public void insertMemo(memoVO m) {
 		sqlSession.insert("insertMemo", m);
 		
+	}
+	@Override
+	public List<memoVO> allList() {
+		List<memoVO>mlist=sqlSession.selectList("allmemoList");
+		return mlist;
 	}
 }
