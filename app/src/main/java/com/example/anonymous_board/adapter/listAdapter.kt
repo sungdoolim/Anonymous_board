@@ -1,12 +1,14 @@
 package com.example.anonymous_board.adapter
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
+import com.example.anonymous_board.DetailContent
 import com.example.anonymous_board.R
 import com.example.anonymous_board.datacs.list
 
@@ -22,7 +24,7 @@ class listAdapter(val context: Context?, val listData:ArrayList<list>): Recycler
                 val curPos:Int=adapterPosition
                 var data: list =listData.get(curPos)
 
-                //val intent = Intent(view.getContext(), detail_coupon::class.java)
+                val intent = Intent(view.getContext(), DetailContent::class.java)
                 Toast.makeText(context,"늉"+curPos.toString(),Toast.LENGTH_SHORT).show()
                 val pref=context!!.getSharedPreferences("listData",0)
 
@@ -39,7 +41,7 @@ class listAdapter(val context: Context?, val listData:ArrayList<list>): Recycler
 
 
 
-                //context.startActivity(intent)
+                context.startActivity(intent)
 
                 //  Toast.makeText(parent.context,"이름 :${profile.name}", Toast.LENGTH_SHORT).show()
             }

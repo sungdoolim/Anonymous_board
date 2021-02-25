@@ -72,7 +72,7 @@ public class HomeController {
 		return null;
 		
 	}
-	@RequestMapping("/callMemoList.do")
+	@RequestMapping(value="/callMemoList.do" ,produces = "application/json; charset=utf8")
 	public @ResponseBody String callList() {
 		
 		
@@ -138,7 +138,7 @@ public class HomeController {
         jsonMain.put("sendData", jArray);
         return jsonMain.toJSONString();
 	}
-	@RequestMapping("/andtest.do")// 단일 값들 보내기
+	@RequestMapping(value= "/andtest.do",produces = "application/json; charset=utf8")// 단일 값들 보내기
 	public @ResponseBody String andtest(String id,String pw, HttpServletResponse response,HttpServletRequest request ) throws IOException {
 		System.out.println("andtest");
 		HttpSession session=request.getSession();

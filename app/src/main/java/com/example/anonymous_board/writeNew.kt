@@ -89,8 +89,10 @@ class writeNew : AppCompatActivity() {
         })
     }
     fun save_To_Server(title:String,content:String){
+
+        var baseUrl="http://192.168.234.119:8052"
         var retrofit = Retrofit.Builder()
-            .baseUrl("http://192.168.22.119:8052")//http://192.168.56.1:8052
+            .baseUrl(baseUrl)//http://192.168.56.1:8052
             .addConverterFactory(GsonConverterFactory.create())
             .build()
         val retrofitService = retrofit.create(saveContent::class.java)
@@ -136,8 +138,10 @@ class writeNew : AppCompatActivity() {
         })
     }
     fun f2(){// 리스트를 받음
+
+        var baseUrl="http://192.168.234.119:8052"
         var retrofit = Retrofit.Builder()
-            .baseUrl("http://192.168.11.4:8052")//http://192.168.56.1:8052
+            .baseUrl(baseUrl)//http://192.168.56.1:8052
             .addConverterFactory(GsonConverterFactory.create())
             .build()
         val retrofitService = retrofit.create(allmemo::class.java)//내가만든 inter2 클래스 사용
@@ -186,8 +190,9 @@ class writeNew : AppCompatActivity() {
     }
     fun f(){// 단일 클래스를 받음
 
+        var baseUrl="http://192.168.234.119:8052"
         var retrofit = Retrofit.Builder()
-            .baseUrl("http://192.168.11.4:8052")//http://192.168.56.1:8052
+            .baseUrl(baseUrl)//http://192.168.56.1:8052
             .addConverterFactory(GsonConverterFactory.create())
             .build()
         val retrofitService = retrofit.create(onememo::class.java)// 내가만든 inter 클래스 사용

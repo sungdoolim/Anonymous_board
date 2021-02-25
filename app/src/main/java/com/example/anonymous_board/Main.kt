@@ -20,6 +20,8 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.net.URLDecoder
+import java.net.URLEncoder
 
 class Main : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,27 +39,36 @@ class Main : AppCompatActivity() {
     }
 
     fun selectList(container: Context){
+        var baseUrl="http://192.168.234.119:8052"
+
         var retrofit = Retrofit.Builder()
-            .baseUrl("http://192.168.22.119:8052")//http://192.168.56.1:8052
+            .baseUrl(baseUrl)//http://192.168.56.1:8052
             .addConverterFactory(GsonConverterFactory.create())
             .build()
+
         val retrofitService = retrofit.create(allList::class.java)
+
         retrofitService.requestAllData().enqueue(object : Callback<list> {
             @RequiresApi(Build.VERSION_CODES.KITKAT)
             override fun onResponse(call: Call<list>, response: Response<list>) {
                 println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~onresponse this is getallList")
                 if (response.isSuccessful) {
+
                     val body = response.body()
+
                     val jsonObj =  JSONObject.wrap(body?.sendData)
-                    println("jsonobj:${jsonObj}")
+
+                   // println("jsonobj:${ String(jsonObj.toString().encodeToByteArray(),charset("UTF-8"))}")
                     val jArray = jsonObj as JSONArray
                     println(jArray.length())
                     var ptmp : list
                     var tmpar= arrayListOf<list>()
                     for(i in 0..jArray.length()-1){
-                        ptmp= list(jArray.getJSONObject(i).getString("title"),
+                        ptmp= list(
+                            jArray.getJSONObject(i).getString("title"),
                             jArray.getJSONObject(i).getString("writer"),
-                            jArray.getJSONObject(i).getString("content"),
+                            jArray.getJSONObject(i).getString("content")
+                            ,
                             null)
                         tmpar.add(ptmp)
                     }
