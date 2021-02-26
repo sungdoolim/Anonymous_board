@@ -8,6 +8,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 <!-- MemberVO 빈 클래스 객체 별칭 m을 설정 -->
 	
 	<typeAlias alias="memos" type="com.zx9cv.staris.vo.memoVO"/>
+	<typeAlias alias="users" type="com.zx9cv.staris.vo.userVO"/>
 
 	
 </typeAliases>

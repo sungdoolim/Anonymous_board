@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.zx9cv.staris.dao.memoDAO;
+import com.zx9cv.staris.dao.userDAO;
 import com.zx9cv.staris.vo.memoVO;
 
 /**
@@ -36,7 +37,8 @@ public class HomeController {
 	
 	@Autowired
 	memoDAO memodao;
-	
+	@Autowired
+	userDAO userdao;
 	
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
@@ -71,6 +73,25 @@ public class HomeController {
 		
 		return null;
 		
+	}
+	@RequestMapping(value="/anonymousLogin.do",produces ="application/json; charset=utf8")
+	public @ResponseBody String Login(String userId, String userPw) {
+		System.out.println(userId+userPw);
+		 JSONObject jsonMain = new JSONObject(); // json 
+
+
+				
+		if (userdao.check(userId,userPw)) {
+			 jsonMain.put("userstate","true");
+			
+			
+		}
+		else {
+			 jsonMain.put("userstate","false");
+				
+		}
+		
+		return jsonMain.toJSONString();
 	}
 	@RequestMapping(value="/callMemoList.do" ,produces = "application/json; charset=utf8")
 	public @ResponseBody String callList() {

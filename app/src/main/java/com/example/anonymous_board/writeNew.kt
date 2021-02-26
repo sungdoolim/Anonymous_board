@@ -22,9 +22,15 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 class writeNew : AppCompatActivity() {
+    val baseUrl="http://192.168.234.119:8052"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_write_new)
+
+
+        var intent= Intent(this, Login::class.java)
+        startActivity(intent)
+
 
 
         save.setOnClickListener(){
@@ -46,7 +52,7 @@ class writeNew : AppCompatActivity() {
     }
     fun callAllList(){
         var retrofit = Retrofit.Builder()
-            .baseUrl("http://192.168.22.119:8052")//http://192.168.56.1:8052
+            .baseUrl(baseUrl)//http://192.168.56.1:8052
             .addConverterFactory(GsonConverterFactory.create())
             .build()
         val retrofitService = retrofit.create(allList::class.java)
@@ -90,7 +96,7 @@ class writeNew : AppCompatActivity() {
     }
     fun save_To_Server(title:String,content:String){
 
-        var baseUrl="http://192.168.234.119:8052"
+
         var retrofit = Retrofit.Builder()
             .baseUrl(baseUrl)//http://192.168.56.1:8052
             .addConverterFactory(GsonConverterFactory.create())
@@ -139,7 +145,6 @@ class writeNew : AppCompatActivity() {
     }
     fun f2(){// 리스트를 받음
 
-        var baseUrl="http://192.168.234.119:8052"
         var retrofit = Retrofit.Builder()
             .baseUrl(baseUrl)//http://192.168.56.1:8052
             .addConverterFactory(GsonConverterFactory.create())

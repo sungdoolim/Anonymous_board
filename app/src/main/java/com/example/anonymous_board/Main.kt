@@ -6,6 +6,7 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -24,9 +25,18 @@ import java.net.URLDecoder
 import java.net.URLEncoder
 
 class Main : AppCompatActivity() {
+    val baseUrl="http://192.168.234.119:8052"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        var pref=getSharedPreferences("session",0)
+        var sessionId=pref.getString("sessionId","")
+        if (sessionId.equals("")){
+
+            Toast.makeText(this,"로그인을 해 주세요!",Toast.LENGTH_SHORT).show()
+        }else{
+            Toast.makeText(this,"즐거운 하루 되세요 "+sessionId+"님!",Toast.LENGTH_SHORT).show()
+        }
 
 
            selectList(this)
@@ -39,7 +49,6 @@ class Main : AppCompatActivity() {
     }
 
     fun selectList(container: Context){
-        var baseUrl="http://192.168.234.119:8052"
 
         var retrofit = Retrofit.Builder()
             .baseUrl(baseUrl)//http://192.168.56.1:8052

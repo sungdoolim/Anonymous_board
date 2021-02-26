@@ -14,7 +14,9 @@ PUBLIC  "-//mybatis.org//DTD Mapper 3.0//EN"
 	select * from memolist
 </select>
 
-
+<select id="selectOneUser" resultType="users">
+	select * from users where id=#{userId}
+</select>
 <update id="chmod">
 	update users set Siscouncil=#{Siscouncil} where Sid=#{Sid}
 </update>
