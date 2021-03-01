@@ -26,5 +26,30 @@ public class userDAOImpl implements userDAO{
 		}
 		
 	}
+	@Override
+	public boolean check(String userId) {
+		// TODO Auto-generated method stub
+		userVO user=sqlSession.selectOne("selectOneUser",userId);
+		if(user!=null) {
+			return true;
+		}else {
+			return false;
+		}
+	}
+	@Override
+	public void register(userVO user) {
+		// TODO Auto-generated method stub
+		
+		sqlSession.insert("userRegister", user);
+		
+		
+	}
+	@Override
+	public int getIndex(String writer) {
+		// TODO Auto-generated method stub
+		int index=sqlSession.selectOne("getIndex", writer);
+		sqlSession.update("setIndex",writer);
+		return index;
+	}
 
 }

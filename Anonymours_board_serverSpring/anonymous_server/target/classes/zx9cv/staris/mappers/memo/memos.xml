@@ -5,13 +5,16 @@ PUBLIC  "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="Memo">
 
 
+<update id="testUpdate">
+	update users set datetime=#{now}
 
+</update>
 <insert id="insertMemo">
-	insert into memolist(writer,content,title) values(#{writer},#{content},#{title})
+	insert into memolist(writer,content,title,id,datetime) values(#{writer},#{content},#{title},#{id},sysdate)
 </insert>
 
 <select id="allmemoList" resultType="memos">
-	select * from memolist
+	select * from memolist order by datetime
 </select>
 
 <select id="selectOneUser" resultType="users">
@@ -20,6 +23,20 @@ PUBLIC  "-//mybatis.org//DTD Mapper 3.0//EN"
 <update id="chmod">
 	update users set Siscouncil=#{Siscouncil} where Sid=#{Sid}
 </update>
+<insert id="userRegister">
+	insert into users (id,name,pw,state,idnum) values(#{id},#{name},#{pw},0,0)
+</insert>
+<select id="getIndex" resultType="INT">
+	select idnum from users where id=#{writer}
+</select>
+<update id="setIndex">
+	update users set idnum=(idnum+1) where id=#{writer}
+</update>
+<delete id="delOne">
+	delete from memolist where id=#{id} and writer=#{writer} 
+</delete>
+
+
 </mapper>
 <!-- <select id="selall" resultType="users">
 	select * from users where Sid=#{Sid}

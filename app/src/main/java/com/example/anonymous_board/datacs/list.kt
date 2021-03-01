@@ -4,6 +4,8 @@ data class list(
     val writer:String="",
     val title:String="",
     val content:String="",
-    var sendData: ArrayList<Any>?
+    val datetime:String="",
+    val id:Int=-1,
+    var sendData: ArrayList<Any>?=null
 
 )

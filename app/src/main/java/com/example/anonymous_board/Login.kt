@@ -17,11 +17,14 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class Login : AppCompatActivity() {
 
-    val baseUrl="http://192.168.234.119:8052"
+    val baseUrl="http://192.168.11.4:8052"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
-
+        register.setOnClickListener(){
+            var intent=Intent(this,Register::class.java)
+            startActivity(intent)
+        }
 
         checklogin.setOnClickListener(){
 

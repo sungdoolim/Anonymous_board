@@ -21,4 +21,9 @@ public class memodaoImpl implements memoDAO{
 		List<memoVO>mlist=sqlSession.selectList("allmemoList");
 		return mlist;
 	}
+	@Override
+	public void delOne(memoVO m) {
+		// TODO Auto-generated method stub
+		sqlSession.delete("delOne", m);
+	}
 }

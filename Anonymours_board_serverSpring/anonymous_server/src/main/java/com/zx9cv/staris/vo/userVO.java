@@ -4,10 +4,18 @@ public class userVO {
 	String name;
 	String id;
 	String pw;
+	int idnum;
 
 	String state;
 	
 	
+	
+	public int getIdnum() {
+		return idnum;
+	}
+	public void setIdnum(int idnum) {
+		this.idnum = idnum;
+	}
 	public String getName() {
 		return name;
 	}

@@ -6,6 +6,21 @@ public class memoVO {
 private String title;
 private String writer;
 private String content;
+private String datetime;
+private int id;
+
+public int getId() {
+	return id;
+}
+public void setId(int id) {
+	this.id = id;
+}
+public String getDatetime() {
+	return datetime;
+}
+public void setDatetime(String datetime) {
+	this.datetime = datetime;
+}
 public String getTitle() {
 	return title;
 }

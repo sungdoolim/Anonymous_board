@@ -8,5 +8,7 @@ public interface memoDAO {
 	 void insertMemo(memoVO m);
 
 	List<memoVO> allList();
+
+	void delOne(memoVO m);
 	
 }

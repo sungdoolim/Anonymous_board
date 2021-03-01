@@ -5,14 +5,37 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     >
+<androidx.constraintlayout.widget.ConstraintLayout
+    app:layout_constraintTop_toTopOf="parent"
+    android:layout_width="match_parent"
+    android:id="@+id/top"
+    app:layout_constraintLeft_toLeftOf="parent"
+    android:layout_height="wrap_content">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/title"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:text="Anonymous_board"/>
+    <ImageView
+        app:layout_constraintLeft_toRightOf="@+id/title"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:id="@+id/mypage"
+        app:layout_constraintTop_toTopOf="parent"
+        android:src="@drawable/ic_launcher_foreground"
+/>
 
+
+</androidx.constraintlayout.widget.ConstraintLayout>
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/list"
-        android:layout_width="421dp"
+        android:layout_width="match_parent"
         android:layout_height="537dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/top" />
 
     <Button
         android:layout_width="match_parent"

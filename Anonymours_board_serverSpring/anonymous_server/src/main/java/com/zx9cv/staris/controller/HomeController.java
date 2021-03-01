@@ -27,6 +27,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.zx9cv.staris.dao.memoDAO;
 import com.zx9cv.staris.dao.userDAO;
 import com.zx9cv.staris.vo.memoVO;
+import com.zx9cv.staris.vo.userVO;
 
 /**
  * Handles requests for the application home page.
@@ -58,6 +59,20 @@ public class HomeController {
 		
 		return "home";
 	}
+	
+	@RequestMapping("/delmemo.do")
+	public @ResponseBody String delmemo(memoVO m) {
+		//이게 된다!!!!
+		System.out.println("delete...."+m.getId()+m.getWriter());
+		//m.setId(idnum);
+		memodao.delOne(m);
+		
+		
+		
+		System.out.println("del complete");
+		return null;
+	}
+	
 	@RequestMapping("/saveContent.do")
 	public @ResponseBody String saveContent(String title,String writer,String content) {
 		
@@ -66,13 +81,36 @@ public class HomeController {
 		m.setContent(content);
 		m.setTitle(title);
 		m.setWriter(writer);
-		m.toString();
 		
+		m.setId(userdao.getIndex(writer)+1);
+		
+		m.toString();
 		memodao.insertMemo(m);
 		
 		
 		return null;
 		
+	}
+
+	@RequestMapping(value="/anonymousRegister.do",produces ="application/json; charset=utf8")
+	public @ResponseBody String Register(String userId,String userPw, String userName,userVO user) {
+		System.out.println(userId+userPw+userName); 
+		JSONObject jsonMain = new JSONObject(); // json 
+		if (userdao.check(userId)) {
+			jsonMain.put("userstate","false");
+			
+		}else {
+			jsonMain.put("userstate","true");
+			user.setId(userId);
+			user.setName(userName);
+			user.setPw(userPw);
+			
+			
+			userdao.register(user);
+			
+		}
+
+		return jsonMain.toJSONString();
 	}
 	@RequestMapping(value="/anonymousLogin.do",produces ="application/json; charset=utf8")
 	public @ResponseBody String Login(String userId, String userPw) {
@@ -112,6 +150,8 @@ public class HomeController {
              row.put("title", alist.get(i).getTitle());
              row.put("content", alist.get(i).getContent());
              row.put("writer", alist.get(i).getWriter());
+             row.put("id",alist.get(i).getId());
+             row.put("datetime",alist.get(i).getDatetime());
              
              
             // json객체.put("변수명",값)

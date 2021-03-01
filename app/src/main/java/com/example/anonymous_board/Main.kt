@@ -25,7 +25,7 @@ import java.net.URLDecoder
 import java.net.URLEncoder
 
 class Main : AppCompatActivity() {
-    val baseUrl="http://192.168.234.119:8052"
+    val baseUrl="http://192.168.11.4:8052"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -36,16 +36,28 @@ class Main : AppCompatActivity() {
             Toast.makeText(this,"로그인을 해 주세요!",Toast.LENGTH_SHORT).show()
         }else{
             Toast.makeText(this,"즐거운 하루 되세요 "+sessionId+"님!",Toast.LENGTH_SHORT).show()
+            selectList(this)
         }
 
 
-           selectList(this)
+
         writeNew.setOnClickListener(){
             var intent= Intent(this, com.example.anonymous_board.writeNew::class.java)
-            // intent.putExtra("style",editSearch.text.toString())
             startActivity(intent)
         }
 
+        mypage.setOnClickListener(){
+            if (sessionId.toString().equals("")){
+                var intent = Intent(this, Login::class.java)
+                startActivity(intent)}
+            else {
+              //  var intent= Intent(this, com.example.anonymous_board.myPage::class.java)
+
+                var intent = Intent(this, Login::class.java)
+                startActivity(intent)
+
+            }
+        }
     }
 
     fun selectList(container: Context){
@@ -74,10 +86,11 @@ class Main : AppCompatActivity() {
                     var tmpar= arrayListOf<list>()
                     for(i in 0..jArray.length()-1){
                         ptmp= list(
-                            jArray.getJSONObject(i).getString("title"),
                             jArray.getJSONObject(i).getString("writer"),
-                            jArray.getJSONObject(i).getString("content")
-                            ,
+                            jArray.getJSONObject(i).getString("title"),
+                            jArray.getJSONObject(i).getString("content"),
+                            jArray.getJSONObject(i).getString("datetime"),
+                            jArray.getJSONObject(i).getInt("id"),
                             null)
                         tmpar.add(ptmp)
                     }
@@ -103,5 +116,7 @@ class Main : AppCompatActivity() {
                 Log.d("this is error",t.message.toString())
             }
         })
-    }
+
+
+    }//selectList
 }
