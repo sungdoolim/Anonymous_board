@@ -7,6 +7,8 @@ create table memolist(title varchar(20), content varchar(100),writer varchar(20)
 
 select * from MEMOLIST
 
+delete from memolist
+
 drop table users
 
 select idnum from users where id='1234'

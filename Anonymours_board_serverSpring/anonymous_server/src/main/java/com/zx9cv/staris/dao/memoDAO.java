@@ -10,5 +10,7 @@ public interface memoDAO {
 	List<memoVO> allList();
 
 	void delOne(memoVO m);
+
+	void updateMemo(memoVO m);
 	
 }

@@ -26,4 +26,9 @@ public class memodaoImpl implements memoDAO{
 		// TODO Auto-generated method stub
 		sqlSession.delete("delOne", m);
 	}
+	@Override
+	public void updateMemo(memoVO m) {
+		// TODO Auto-generated method stub
+		sqlSession.update("updateOneMemo",m);
+	}
 }

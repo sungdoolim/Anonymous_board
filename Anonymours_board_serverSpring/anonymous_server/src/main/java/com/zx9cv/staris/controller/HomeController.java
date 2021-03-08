@@ -1,6 +1,13 @@
 package com.zx9cv.staris.controller;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -22,7 +29,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.zx9cv.staris.dao.memoDAO;
 import com.zx9cv.staris.dao.userDAO;
@@ -91,7 +101,16 @@ public class HomeController {
 		return null;
 		
 	}
-
+	@RequestMapping(value="/updatememo.do",produces ="application/json; charset=utf8")
+	public @ResponseBody String modifymemo(memoVO m) {
+		System.out.println("modify");
+		System.out.println(m.toString());
+		memodao.updateMemo(m);
+		
+		
+		return null;
+	}
+	
 	@RequestMapping(value="/anonymousRegister.do",produces ="application/json; charset=utf8")
 	public @ResponseBody String Register(String userId,String userPw, String userName,userVO user) {
 		System.out.println(userId+userPw+userName); 
@@ -216,6 +235,116 @@ public class HomeController {
 			// System.out.println(pwd);		
 				return jsonMain.toJSONString();
 		//	return jsonMain;
+	}
+	@RequestMapping("/testupload.do")
+	public String testupload() {
+		return "uploadfile";
+	}
+	
+	@RequestMapping("/uploadFile")
+	public String uploadFile(RedirectAttributes rttr,HttpServletRequest request, @RequestParam("imgFile") MultipartFile imgFile , Model model) {
+		String savePath="C:\\Users\\bohee\\source\\staris";
+		System.out.println("uploadFile");
+		String originalFilename = imgFile.getOriginalFilename(); // fileName.jpg
+	    String onlyFileName = originalFilename.substring(0, originalFilename.indexOf(".")); // fileName
+	    String extension = originalFilename.substring(originalFilename.indexOf(".")); // .jpg
+	 
+	    String rename = onlyFileName + extension; // fileName_20150721-14-07-50.jpg
+	    String fullPath = savePath + "\\" + rename;
+	    
+	    
+		File Folder = new File(savePath);	
+
+		// 해당 디렉토리가 없을경우 디렉토리를 생성합니다.
+		if (!Folder.exists()) {
+			try{
+			    Folder.mkdir(); //폴더 생성합니다.
+			    System.out.println("폴더가 생성되었습니다.");
+		        } 
+		        catch(Exception e){
+			    e.getStackTrace();
+			}        
+	         }else {
+			System.out.println("이미 폴더가 생성되어 있습니다.");
+		}
+		
+	    if (!imgFile.isEmpty()) {
+	        try {
+	            byte[] bytes = imgFile.getBytes();
+	            BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(new File(fullPath)));
+	            stream.write(bytes);
+	            stream.close();
+	           // bldao.fileio(blvo);
+	            
+	            
+	            model.addAttribute("resultMsg", "파일을 업로드 성공!");
+	        } catch (Exception e) {
+	            model.addAttribute("resultMsg", "파일을 업로드하는 데에 실패했습니다.");
+	        }
+	    } else {
+	        model.addAttribute("resultMsg", "업로드할 파일을 선택해주시기 바랍니다.");
+	    }
+		
+		return "redirect:/updown";
+	}
+	
+	@RequestMapping("/downloadFile")
+	public String downloadFile(RedirectAttributes rttr,HttpServletRequest request,HttpServletResponse response,String fname) throws UnsupportedEncodingException {
+String fileName = request.getParameter("filename");
+		// 파일 이름은 유일해야함
+
+		// ② 경로 가져오기
+		String saveDir = "C:\\Users\\bohee\\source\\staris";
+		
+		File file = new File(saveDir + "\\"+fname);
+
+		response.setContentType("application/octet-stream");
+		String filename = new String(fname.getBytes("UTF-8"), "8859_1");
+			
+			response.setHeader("Content-Disposition", "attachment;filename=" + filename);
+			try {
+				BufferedInputStream bis = new BufferedInputStream(new FileInputStream(file));
+
+				
+				try {
+					BufferedOutputStream bos = new BufferedOutputStream(response.getOutputStream());
+					int data;
+					while((data=bis.read()) != -1){
+						bos.write(data);
+						bos.flush();
+					}
+
+					// 8] 스트림 닫기
+					bis.close();
+					bos.close();
+					
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			// 6] 웹브라우저에 연결할 출력 스트림 생성 
+		//	rttr.addFlashAttribute("msg","SUCCESS"); 
+	
+		//return "redirect:/updown";
+		return "/bank/blistall";
+		
+		
+	}
+	@RequestMapping("/updown")
+	public String updown(Model m) {
+		//List<String>fname=bldao.selectallfile();
+		List<String>fname=new ArrayList<String>();
+		fname.add("resources\\img\\1.png");
+		fname.add("resources\\img\\2.jpg");
+		fname.add("resources\\img\\3.jpg");
+		fname.add("resources\\img\\4.jpg");
+		m.addAttribute("bl", fname);
+
+		return "filelist";
 	}
 	
 	

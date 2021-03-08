@@ -35,6 +35,9 @@ PUBLIC  "-//mybatis.org//DTD Mapper 3.0//EN"
 <delete id="delOne">
 	delete from memolist where id=#{id} and writer=#{writer} 
 </delete>
+<update id="updateOneMemo">
+	update memolist set title=#{title} ,content=#{content} where id=#{id}
+</update>
 
 
 </mapper>

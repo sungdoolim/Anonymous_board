@@ -30,9 +30,11 @@ public void setTitle(String title) {
 public String getWriter() {
 	return writer;
 }
+
 @Override
 public String toString() {
-	return "memoVO [title=" + title + ", writer=" + writer + ", content=" + content + "]";
+	return "memoVO [title=" + title + ", writer=" + writer + ", content=" + content + ", datetime=" + datetime + ", id="
+			+ id + "]";
 }
 public void setWriter(String writer) {
 	this.writer = writer;

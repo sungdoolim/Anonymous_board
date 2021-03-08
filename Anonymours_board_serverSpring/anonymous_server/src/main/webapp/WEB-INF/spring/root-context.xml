@@ -42,6 +42,7 @@
 		<!-- mybatis 환경 설정 태그 경로 설정 -->
 		<property name="configLocation"
 		value="classpath:/mybatis-config.xml"/>
+		
 		<!-- classpath 경로 : src/main/resources
 		mybatis-config.xml은 데이터 저장 빈 클래스 객체명을 별칭으로 관리 : typealias있는 곳 -->
 
@@ -50,6 +51,8 @@
 		<property name="mapperLocations" value="classpath:zx9cv/staris/mappers/*/*.xml"/>
 
 	</bean>
+		<bean id="multipartResolver" 
+	class="org.springframework.web.multipart.commons.CommonsMultipartResolver"/>
 	
 	<!-- mybatis 쿼리문 수행 객체 설정 -->
 	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate"
