@@ -113,7 +113,7 @@ public class HomeController {
 	
 	@RequestMapping(value="/anonymousRegister.do",produces ="application/json; charset=utf8")
 	public @ResponseBody String Register(String userId,String userPw, String userName,userVO user) {
-		System.out.println(userId+userPw+userName); 
+		System.out.println("login "+userId+userPw+userName); 
 		JSONObject jsonMain = new JSONObject(); // json 
 		if (userdao.check(userId)) {
 			jsonMain.put("userstate","false");
@@ -242,7 +242,7 @@ public class HomeController {
 	}
 	
 	@RequestMapping("/uploadFile")
-	public String uploadFile(RedirectAttributes rttr,HttpServletRequest request, @RequestParam("imgFile") MultipartFile imgFile , Model model) {
+	public String uploadFile(RedirectAttributes rttr,HttpServletRequest request, MultipartFile imgFile , Model model) {// @RequestParam("imgFile")
 		String savePath="C:\\Users\\bohee\\source\\staris";
 		System.out.println("uploadFile");
 		String originalFilename = imgFile.getOriginalFilename(); // fileName.jpg

@@ -25,7 +25,11 @@ import java.net.URLDecoder
 import java.net.URLEncoder
 
 class Main : AppCompatActivity() {
-    val baseUrl="http://192.168.11.4:8052"
+
+    companion object {
+        const val baseUrl="http://192.168.11.4:8052"
+
+        }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -53,7 +57,7 @@ class Main : AppCompatActivity() {
             else {
               //  var intent= Intent(this, com.example.anonymous_board.myPage::class.java)
 
-                var intent = Intent(this, Login::class.java)
+                var intent = Intent(this, myPage::class.java)
                 startActivity(intent)
 
             }

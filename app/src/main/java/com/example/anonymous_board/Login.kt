@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.example.anonymous_board.Main.Companion.baseUrl
 
 import com.example.anonymous_board.datacs.userData
 import kotlinx.android.synthetic.main.activity_login.*
@@ -17,7 +18,6 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class Login : AppCompatActivity() {
 
-    val baseUrl="http://192.168.11.4:8052"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)

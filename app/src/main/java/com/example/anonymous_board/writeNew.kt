@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.annotation.RequiresApi
+import com.example.anonymous_board.Main.Companion.baseUrl
 import com.example.anonymous_board.datacs.list
 import com.example.anonymous_board.serverData.allList
 import com.example.anonymous_board.serverData.allmemo
@@ -22,7 +23,6 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 class writeNew : AppCompatActivity() {
-    val baseUrl="http://192.168.11.4:8052"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_write_new)

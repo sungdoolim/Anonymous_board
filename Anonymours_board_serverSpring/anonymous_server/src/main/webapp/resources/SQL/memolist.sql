@@ -9,6 +9,8 @@ select * from MEMOLIST
 
 delete from memolist
 
+select * from users
+
 drop table users
 
 select idnum from users where id='1234'
